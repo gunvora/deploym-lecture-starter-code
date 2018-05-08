@@ -6,7 +6,13 @@ const app = express()
 
 app.use(bodyParser.json())
 
-mongoose.connect("mongodb://localhost/mongoLecture", { useMongoClient: true })
+console.log(process.env.MONGO_URL)
+
+
+// const mongoUrl = process.env.MONGO_URL || "mongodb://localhost/mongoLecture"
+
+const mongoUrl = process.env.MONGO_URL || "mongodb://admin:Liselott@ds016108.mlab.com:16108/deployment-lecture"
+mongoose.connect(mongoUrl, { useMongoClient: true })
 mongoose.Promise = Promise
 
 mongoose.connection.once("open", () => {
@@ -50,4 +56,5 @@ app.post("/fruits", (req, res) => {
   })
 })
 
+const port = process.env.PORT || 8080
 app.listen(8080)
